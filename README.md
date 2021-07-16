@@ -48,3 +48,16 @@ yarn create react-app my-app --template redux-typescript
 
 ## Prettier playground
 https://prettier.io/playground
+https://blog.digital-craftsman.de/axios-interceptor-to-refresh-jwt-token-after-expiration/
+
+# Mini Project - Student Management
+
+react-router-dom
+@types/react-router-dom
+
+/login
+/admin
+
+/admin/*
+/admin/dashboard
+/admin/students
