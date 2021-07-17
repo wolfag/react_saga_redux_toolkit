@@ -12,7 +12,7 @@ function* handleLogin(payload: LoginPayload) {
     yield put(authActions.loginSuccess({ id: 1, name: 'wolfag' }))
 
     // redirect to admin page
-    yield put(push('/admin'));
+    yield put(push('/admin/dashboard'));
   } catch (error) {
     console.log({ handleLogin: { ...error } })
     yield put(authActions.loginFailed(error.message))
