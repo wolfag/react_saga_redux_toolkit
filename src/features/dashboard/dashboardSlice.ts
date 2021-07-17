@@ -36,7 +36,7 @@ const initialState: DashboardState = {
   rankingByCityList: []
 }
 
-const dashboardSlide = createSlice({
+const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
@@ -65,7 +65,7 @@ const dashboardSlide = createSlice({
   }
 });
 
-export const dashboardActions = dashboardSlide.actions;
+export const dashboardActions = dashboardSlice.actions;
 
 export const selectDashboardLoading = (state: RootState) => state.dashboard.loading;
 export const selectStatistics = (state: RootState) => state.dashboard.statistics;
@@ -73,5 +73,5 @@ export const selectHighestStudentList = (state: RootState) => state.dashboard.hi
 export const selectLowestStudentList = (state: RootState) => state.dashboard.lowestStudentList;
 export const selectRankingByCityList = (state: RootState) => state.dashboard.rankingByCityList;
 
-const dashboardReducer = dashboardSlide.reducer;
+const dashboardReducer = dashboardSlice.reducer;
 export default dashboardReducer;

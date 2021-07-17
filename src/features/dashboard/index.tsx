@@ -12,7 +12,7 @@ import {
   selectLowestStudentList,
   selectRankingByCityList,
   selectStatistics,
-} from './dashboardSlide';
+} from './dashboardSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {

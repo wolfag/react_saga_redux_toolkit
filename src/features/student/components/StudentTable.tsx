@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,11 +6,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Student } from 'models';
+import { City, CityMap, Student } from 'models';
 import React, { ReactElement } from 'react';
+import { capitalizeString, getMarkColor } from 'utils';
 
 interface Props {
   studentList: Student[];
+  cityMap: CityMap;
   onEdit?: (student: Student) => void;
   onRemove?: (student: Student) => void;
 }
@@ -25,7 +27,12 @@ const useStyles = makeStyles((theme) => ({
   remove: {},
 }));
 
-export default function StudentTable({ studentList, onEdit, onRemove }: Props): ReactElement {
+export default function StudentTable({
+  studentList,
+  cityMap,
+  onEdit,
+  onRemove,
+}: Props): ReactElement {
   const classes = useStyles();
 
   return (
@@ -38,18 +45,24 @@ export default function StudentTable({ studentList, onEdit, onRemove }: Props): 
             <TableCell align="left">Gender</TableCell>
             <TableCell align="left">Mark</TableCell>
             <TableCell align="left">City</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {studentList.map((student, idx) => (
             <TableRow key={student.id}>
-              <TableCell align="center">{student.id}</TableCell>
+              <TableCell width={315} align="center">
+                {student.id}
+              </TableCell>
               <TableCell align="left">{student.name}</TableCell>
-              <TableCell align="left">{student.gender}</TableCell>
-              <TableCell align="left">{student.mark}</TableCell>
-              <TableCell align="left">{student.city}</TableCell>
-              <TableCell align="right">
+              <TableCell align="left">{capitalizeString(student.gender)}</TableCell>
+              <TableCell align="left">
+                <Box color={getMarkColor(student.mark)} fontWeight="bold">
+                  {student.mark}
+                </Box>
+              </TableCell>
+              <TableCell align="left">{cityMap[student.city]?.name}</TableCell>
+              <TableCell align="center">
                 <Button
                   className={classes.edit}
                   color="primary"

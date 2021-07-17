@@ -24,7 +24,7 @@ const initialState: StudentState = {
   }
 }
 
-const studentSlide = createSlice({
+const studentSlice = createSlice({
   name: 'student',
   initialState,
   reducers: {
@@ -46,12 +46,12 @@ const studentSlide = createSlice({
   }
 })
 
-export const studentActions = studentSlide.actions;
+export const studentActions = studentSlice.actions;
 
 export const selectStudentList = (state: RootState) => state.student.list;
 export const selectStudentLoading = (state: RootState) => state.student.loading;
 export const selectStudentFilter = (state: RootState) => state.student.filter;
 export const selectStudentPagination = (state: RootState) => state.student.pagination;
 
-const studentReducer = studentSlide.reducer;
+const studentReducer = studentSlice.reducer;
 export default studentReducer;

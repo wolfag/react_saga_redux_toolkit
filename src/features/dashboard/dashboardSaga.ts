@@ -1,7 +1,7 @@
 import { cityApi, studentApi } from "api";
 import { City, ListResponse, Student } from "models";
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { dashboardActions, RankingByCity } from "./dashboardSlide";
+import { dashboardActions, RankingByCity } from "./dashboardSlice";
 
 function* fetchStatistics() {
   const responseList: Array<ListResponse<Student>> = yield all([
