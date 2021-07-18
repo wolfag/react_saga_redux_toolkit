@@ -1,22 +1,22 @@
-import { ListParams, ListResponse, Student } from "models";
+import { IListParams, IListResponse, IStudent } from "models";
 import axiosClient from "./axiosClient";
 
 const studentApi = {
-  getAll(params: ListParams): Promise<ListResponse<Student>> {
+  getAll(params: IListParams): Promise<IListResponse<IStudent>> {
     const url = '/students';
     return axiosClient.get(url, {
       params
     })
   },
-  getById(id: string): Promise<Student> {
+  getById(id: string): Promise<IStudent> {
     const url = `/students/${id}`;
     return axiosClient.get(url)
   },
-  add(data: Student): Promise<Student> {
+  add(data: IStudent): Promise<IStudent> {
     const url = '/students';
     return axiosClient.post(url, data)
   },
-  update(data: Student): Promise<Student> {
+  update(data: IStudent): Promise<IStudent> {
     const url = '/students';
     return axiosClient.patch(url, data)
   },

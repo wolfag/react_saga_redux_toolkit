@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { Student } from "models";
+import { IStudent } from "models";
 
 export interface DashboardStatistics {
   maleCount: number;
@@ -12,14 +12,14 @@ export interface DashboardStatistics {
 export interface RankingByCity {
   cityId: string;
   cityName: string;
-  rankingList: Student[];
+  rankingList: IStudent[];
 }
 
 export interface DashboardState {
   loading: boolean;
   statistics: DashboardStatistics;
-  highestStudentList: Student[];
-  lowestStudentList: Student[];
+  highestStudentList: IStudent[];
+  lowestStudentList: IStudent[];
   rankingByCityList: RankingByCity[];
 }
 
@@ -53,10 +53,10 @@ const dashboardSlice = createSlice({
     setStatistics(state, action: PayloadAction<DashboardStatistics>) {
       state.statistics = action.payload
     },
-    setHighestStudentList(state, action: PayloadAction<Student[]>) {
+    setHighestStudentList(state, action: PayloadAction<IStudent[]>) {
       state.highestStudentList = action.payload
     },
-    setLowestStudentList(state, action: PayloadAction<Student[]>) {
+    setLowestStudentList(state, action: PayloadAction<IStudent[]>) {
       state.lowestStudentList = action.payload
     },
     setRankingByCityList(state, action: PayloadAction<RankingByCity[]>) {

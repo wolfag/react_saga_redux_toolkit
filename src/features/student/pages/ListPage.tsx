@@ -11,6 +11,8 @@ import {
 } from '../studentSlice';
 import Pagination from '@material-ui/lab/Pagination';
 import { selectCityMap } from 'features/city/citySlice';
+import { PlusOne } from '@material-ui/icons';
+import { IStudent, TOrder } from 'models';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,12 +63,22 @@ export default function ListPage(): ReactElement {
     );
   };
 
+  const handleOrderChange = (order: TOrder, property: keyof IStudent) => {
+    dispatch(
+      studentActions.setFilter({
+        ...filter,
+        _sort: property,
+        _order: order,
+      })
+    );
+  };
+
   return (
     <Box className={classes.root}>
       {loading && <LinearProgress className={classes.loading} />}
       <Box className={classes.titleContainer}>
         <Typography variant="h4">Students</Typography>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" startIcon={<PlusOne />}>
           Add new student
         </Button>
       </Box>
@@ -74,6 +86,7 @@ export default function ListPage(): ReactElement {
         {...{
           studentList,
           cityMap,
+          onSort: handleOrderChange,
         }}
       />
       <Box className={classes.pagination}>

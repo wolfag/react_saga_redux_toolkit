@@ -1,10 +1,10 @@
 import { cityApi, studentApi } from "api";
-import { City, ListResponse, Student } from "models";
+import { ICity, IListResponse, IStudent } from "models";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { dashboardActions, RankingByCity } from "./dashboardSlice";
 
 function* fetchStatistics() {
-  const responseList: Array<ListResponse<Student>> = yield all([
+  const responseList: Array<IListResponse<IStudent>> = yield all([
     call(studentApi.getAll, { _page: 1, _limit: 1, gender: 'male' }),
     call(studentApi.getAll, { _page: 1, _limit: 1, gender: 'female' }),
     call(studentApi.getAll, { _page: 1, _limit: 1, mark_gte: 8 }),
@@ -16,7 +16,7 @@ function* fetchStatistics() {
 }
 
 function* fetchHighestStudentList() {
-  const { data }: ListResponse<Student> = yield call(studentApi.getAll, {
+  const { data }: IListResponse<IStudent> = yield call(studentApi.getAll, {
     _page: 1,
     _limit: 5,
     _sort: 'mark',
@@ -27,7 +27,7 @@ function* fetchHighestStudentList() {
 }
 
 function* fetchLowestStudentList() {
-  const { data }: ListResponse<Student> = yield call(studentApi.getAll, {
+  const { data }: IListResponse<IStudent> = yield call(studentApi.getAll, {
     _page: 1,
     _limit: 5,
     _sort: 'mark',
@@ -38,7 +38,7 @@ function* fetchLowestStudentList() {
 }
 
 function* fetchRankingByCityList() {
-  const { data: cityList }: ListResponse<City> = yield call(cityApi.getAll)
+  const { data: cityList }: IListResponse<ICity> = yield call(cityApi.getAll)
 
   const callList = cityList.map(item => call(studentApi.getAll, {
     _page: 1,
@@ -47,7 +47,7 @@ function* fetchRankingByCityList() {
     _order: 'desc',
     city: item.code
   }));
-  const responseList: Array<ListResponse<Student>> = yield all(callList);
+  const responseList: Array<IListResponse<IStudent>> = yield all(callList);
   const rankingByCityList: Array<RankingByCity> = responseList.map((x, idx) => ({
     cityId: cityList[idx].code,
     cityName: cityList[idx].name,

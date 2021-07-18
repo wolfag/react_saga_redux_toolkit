@@ -1,19 +1,21 @@
-export interface PaginationParams {
+export interface IPaginationParams {
   _limit: number;
   _page: number;
   _totalRows: number;
 }
 
-export interface ListResponse<T> {
+export interface IListResponse<T> {
   data: T[],
-  pagination: PaginationParams;
+  pagination: IPaginationParams;
 }
 
-export interface ListParams {
+export type TOrder = 'asc' | 'desc'
+
+export interface IListParams {
   _page?: number;
   _limit?: number;
   _sort?: string;
-  _order?: 'asc' | 'desc';
+  _order?: TOrder;
 
   [key: string]: any;
 }

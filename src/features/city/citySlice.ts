@@ -1,10 +1,10 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { City, CityMap, ListResponse } from "models";
+import { ICity, ICityMap, IListResponse } from "models";
 
 
 export interface CityState {
-  list: City[];
+  list: ICity[];
   loading: boolean;
 }
 
@@ -20,7 +20,7 @@ const citySlice = createSlice({
     fetchCityList(state) {
       state.loading = true;
     },
-    fetchCityListSuccess(state, action: PayloadAction<ListResponse<City>>) {
+    fetchCityListSuccess(state, action: PayloadAction<IListResponse<ICity>>) {
       state.loading = false;
       state.list = action.payload.data;
     },
@@ -34,7 +34,7 @@ const citySlice = createSlice({
 export const cityActions = citySlice.actions;
 
 export const selectCityList = (state: RootState) => state.city.list;
-export const selectCityMap = createSelector(selectCityList, (cityList) => cityList.reduce((map: CityMap, city) => {
+export const selectCityMap = createSelector(selectCityList, (cityList) => cityList.reduce((map: ICityMap, city) => {
   map[city.code] = city;
   return map;
 }, {}))

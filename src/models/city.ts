@@ -1,8 +1,8 @@
-export interface City {
+export interface ICity {
   code: string;
   name: string;
 }
 
-export interface CityMap {
-  [code: string]: City;
+export interface ICityMap {
+  [code: string]: ICity;
 }

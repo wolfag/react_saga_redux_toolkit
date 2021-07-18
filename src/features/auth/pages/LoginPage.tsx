@@ -38,8 +38,14 @@ export default function LoginPage(): ReactElement {
           Student Management
         </Typography>
         <Box mt={4}>
-          <Button fullWidth variant="contained" color="primary" onClick={handleLoginClick}>
-            {isLogging && <CircularProgress size={20} color="secondary" />} Fake Login
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={handleLoginClick}
+            startIcon={isLogging && <CircularProgress size={20} color="secondary" />}
+          >
+            Fake Login
           </Button>
         </Box>
       </Paper>
