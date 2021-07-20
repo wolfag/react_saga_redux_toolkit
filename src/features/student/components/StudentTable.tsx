@@ -9,7 +9,7 @@ import { Delete, Edit } from '@material-ui/icons';
 import { ICityMap, IStudent, TOrder } from 'models';
 import React, { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
 import { capitalizeString, getMarkColor } from 'utils';
-import TableHeader from './TableHeader';
+import HeaderRow from './HeaderRow';
 
 interface Props {
   studentList: IStudent[];
@@ -85,7 +85,7 @@ export default function StudentTable({
         aria-label="sticky enhanced table"
         size="medium"
       >
-        <TableHeader
+        <HeaderRow
           numSelected={selected.length}
           order={order}
           orderBy={orderBy}

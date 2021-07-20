@@ -60,7 +60,7 @@ const headCells: HeadCell[] = [
   },
 ];
 
-export default function TableHeader({
+export default function HeaderRow({
   numSelected,
   onRequestSort,
   onSelectAllClick,

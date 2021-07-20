@@ -15,12 +15,12 @@ const initialState: StudentState = {
   list: [],
   filter: {
     _page: 1,
-    _limit: 100,
+    _limit: 20,
   },
   pagination: {
     _page: 1,
     _limit: 10,
-    _totalRows: 100
+    _totalRows: 20
   }
 }
 
