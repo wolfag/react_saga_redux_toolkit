@@ -16,13 +16,13 @@ function App() {
     cityApi.getAll().then((res) => console.log(res.data));
   }, []);
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(push('/admin'));
-    } else {
-      dispatch(push('/login'));
-    }
-  }, [dispatch, isLoggedIn]);
+  // useEffect(() => {
+  //   if (isLoggedIn) {
+  //     dispatch(push('/admin'));
+  //   } else {
+  //     dispatch(push('/login'));
+  //   }
+  // }, [dispatch, isLoggedIn]);
 
   return (
     <Switch>

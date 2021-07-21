@@ -16,7 +16,7 @@ const initialState: StudentState = {
   filter: {
     _page: 1,
     _limit: 20,
-    name_like: 'Ju'
+    name_like: ''
   },
   pagination: {
     _page: 1,
