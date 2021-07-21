@@ -6,14 +6,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import { Delete, Edit } from '@material-ui/icons';
-import { ICityMap, IStudent, TOrder } from 'models';
-import React, { ChangeEvent, MouseEvent, ReactElement, useState } from 'react';
+import { ICityMap, IListParams, IStudent, TOrder } from 'models';
+import React, { ChangeEvent, MouseEvent, ReactElement, useState, useEffect } from 'react';
 import { capitalizeString, getMarkColor } from 'utils';
 import HeaderRow from './HeaderRow';
 
 interface Props {
   studentList: IStudent[];
   cityMap: ICityMap;
+  filter: IListParams;
   onEdit?: (student: IStudent) => void;
   onRemove?: (student: IStudent) => void;
   onSort?: (order: TOrder, property: keyof IStudent) => void;
@@ -38,11 +39,17 @@ export default function StudentTable({
   onEdit,
   onRemove,
   onSort,
+  filter,
 }: Props): ReactElement {
   const classes = useStyles();
   const [selected, setSelected] = useState<(string | undefined)[]>([]);
-  const [order, setOrder] = useState<TOrder>('asc');
-  const [orderBy, setOrderBy] = useState<keyof IStudent>('name');
+  const [order, setOrder] = useState<TOrder | undefined>(filter._order);
+  const [orderBy, setOrderBy] = useState<string | undefined>(filter._sort);
+
+  useEffect(() => {
+    setOrder(filter._order);
+    setOrderBy(filter._sort);
+  }, [filter]);
 
   const isSelected = (id: string | undefined) => selected.indexOf(id) !== -1;
 

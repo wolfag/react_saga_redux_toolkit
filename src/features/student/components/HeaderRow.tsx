@@ -7,8 +7,8 @@ interface Props {
   numSelected: number;
   onRequestSort: (event: MouseEvent<unknown>, property: keyof IStudent) => void;
   onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void;
-  order: TOrder;
-  orderBy: string;
+  order?: TOrder;
+  orderBy?: string;
   rowCount: number;
 }
 
@@ -73,7 +73,7 @@ export default function HeaderRow({
   const createSortHandler = (property: keyof IStudent) => (event: MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
-
+  console.log({ orderBy });
   return (
     <TableHead>
       <TableRow>

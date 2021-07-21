@@ -1,9 +1,9 @@
-import { Box, FormControl, Grid, InputLabel, OutlinedInput } from '@material-ui/core';
+import { Box, Button, FormControl, Grid, InputLabel, OutlinedInput } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { Search } from '@material-ui/icons';
 import { ICity, IListParams } from 'models';
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement, useRef } from 'react';
 
 interface Props {
   filter: IListParams;
@@ -18,6 +18,8 @@ export default function StudentFilters({
   onChange,
   onSearchChange,
 }: Props): ReactElement {
+  const searchRef = useRef<HTMLInputElement>();
+
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!onSearchChange) return;
 
@@ -39,6 +41,23 @@ export default function StudentFilters({
     onChange(newFilter);
   };
 
+  const handleClearFilter = () => {
+    if (!onChange) return;
+
+    const newFilter = {
+      _page: 1,
+      _sort: undefined,
+      _order: undefined,
+      city: undefined,
+      name_like: undefined,
+    };
+    onChange(newFilter);
+
+    if (searchRef.current) {
+      searchRef.current.value = '';
+    }
+  };
+
   return (
     <Box>
       <Grid container spacing={3}>
@@ -51,6 +70,7 @@ export default function StudentFilters({
               onChange={handleSearchChange}
               endAdornment={<Search />}
               defaultValue={filter.name_like}
+              inputRef={searchRef}
             />
           </FormControl>
         </Grid>
@@ -73,6 +93,11 @@ export default function StudentFilters({
               ))}
             </Select>
           </FormControl>
+        </Grid>
+        <Grid item xs={12} md={6} lg={1}>
+          <Button variant="outlined" color="primary" onClick={handleClearFilter}>
+            Clear
+          </Button>
         </Grid>
       </Grid>
     </Box>

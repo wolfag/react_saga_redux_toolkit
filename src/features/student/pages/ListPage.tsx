@@ -108,6 +108,7 @@ export default function ListPage(): ReactElement {
           studentList,
           cityMap,
           onSort: handleOrderChange,
+          filter,
         }}
       />
       <Box className={classes.pagination}>
