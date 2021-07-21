@@ -14,6 +14,7 @@ import { selectCityList, selectCityMap } from 'features/city/citySlice';
 import { PlusOne } from '@material-ui/icons';
 import { IListParams, IStudent, TOrder } from 'models';
 import StudentFilters from '../components/StudentFilters';
+import { studentApi } from 'api';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,6 +84,15 @@ export default function ListPage(): ReactElement {
     dispatch(studentActions.setFilter(newFilter));
   };
 
+  const handleRemoveStudent = async (student: IStudent) => {
+    try {
+      await studentApi.remove(student.id || '');
+      dispatch(studentActions.setFilter({ ...filter }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box className={classes.root}>
       {loading && <LinearProgress className={classes.loading} />}
@@ -109,6 +119,7 @@ export default function ListPage(): ReactElement {
           cityMap,
           onSort: handleOrderChange,
           filter,
+          onRemove: handleRemoveStudent,
         }}
       />
       <Box className={classes.pagination}>

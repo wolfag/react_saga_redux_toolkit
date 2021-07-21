@@ -73,7 +73,7 @@ export default function HeaderRow({
   const createSortHandler = (property: keyof IStudent) => (event: MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
-  console.log({ orderBy });
+
   return (
     <TableHead>
       <TableRow>
