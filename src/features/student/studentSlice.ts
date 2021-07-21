@@ -16,6 +16,7 @@ const initialState: StudentState = {
   filter: {
     _page: 1,
     _limit: 20,
+    name_like: 'Ju'
   },
   pagination: {
     _page: 1,
@@ -42,7 +43,8 @@ const studentSlice = createSlice({
 
     setFilter(state, action: PayloadAction<IListParams>) {
       state.filter = action.payload;
-    }
+    },
+    setFilterWithDebounce(state, action: PayloadAction<IListParams>) { }
   }
 })
 
