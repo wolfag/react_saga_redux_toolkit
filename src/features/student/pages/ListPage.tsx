@@ -15,6 +15,7 @@ import { PlusOne } from '@material-ui/icons';
 import { IListParams, IStudent, TOrder } from 'models';
 import StudentFilters from '../components/StudentFilters';
 import { studentApi } from 'api';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 export default function ListPage(): ReactElement {
   const classes = useStyles();
   const dispatch = useAppDispatch();
+  const match = useRouteMatch();
+  const history = useHistory();
 
   const studentList = useAppSelector(selectStudentList);
   const loading = useAppSelector(selectStudentLoading);
@@ -93,14 +96,20 @@ export default function ListPage(): ReactElement {
     }
   };
 
+  const handleEditStudent = (student: IStudent) => {
+    history.push(`${match.url}/${student.id}`);
+  };
+
   return (
     <Box className={classes.root}>
       {loading && <LinearProgress className={classes.loading} />}
       <Box className={classes.titleContainer}>
         <Typography variant="h4">Students</Typography>
-        <Button variant="contained" color="primary" startIcon={<PlusOne />}>
-          Add new student
-        </Button>
+        <Link to={`${match.url}/add`} style={{ textDecoration: 'none' }}>
+          <Button variant="contained" color="primary" startIcon={<PlusOne />}>
+            Add new student
+          </Button>
+        </Link>
       </Box>
 
       <Box mb={3}>
@@ -120,6 +129,7 @@ export default function ListPage(): ReactElement {
           onSort: handleOrderChange,
           filter,
           onRemove: handleRemoveStudent,
+          onEdit: handleEditStudent,
         }}
       />
       <Box className={classes.pagination}>

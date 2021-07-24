@@ -21,7 +21,7 @@ export function StudentFeature(): ReactElement {
       <Route path={`${match.path}/add`}>
         <AddEditPage />
       </Route>
-      <Route path={`${match.path}/studentId`}>
+      <Route path={`${match.path}/:studentId`}>
         <AddEditPage />
       </Route>
     </Switch>
