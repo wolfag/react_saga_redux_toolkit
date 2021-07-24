@@ -5,6 +5,7 @@ import { IStudent } from 'models';
 import React, { ReactElement, useState } from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { StudentForm } from '../components/StudentForm';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +41,18 @@ export default function AddEditPage(): ReactElement {
     })();
   }, [studentId]);
 
-  console.log({ loading });
+  const initialValues: IStudent = {
+    name: '',
+    age: '',
+    mark: '',
+    gender: 'male',
+    city: '',
+    ...student,
+  } as IStudent;
+
+  const handleStudentFormSubmit = (data: IStudent) => {
+    console.log({ data });
+  };
 
   return (
     <Box className={classes.root}>
@@ -51,6 +63,11 @@ export default function AddEditPage(): ReactElement {
         </Typography>
       </Link>
       <Typography variant="h4">{isEdit ? 'Update student' : 'Add new student'}</Typography>
+      {(!isEdit || !!student) && (
+        <Box mt={3}>
+          <StudentForm initialValues={initialValues} onSubmit={handleStudentFormSubmit} />
+        </Box>
+      )}
     </Box>
   );
 }
