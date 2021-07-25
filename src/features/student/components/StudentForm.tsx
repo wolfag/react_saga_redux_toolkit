@@ -6,20 +6,31 @@ import { IStudent } from 'models';
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface Props {
   initialValues?: IStudent;
   onSubmit?: (formValues: IStudent) => void;
 }
 
-type FormData = {
-  firstName: string;
-  lastName: string;
-};
-
 const schema = yup.object().shape({
-  firstName: yup.string().required(),
-  age: yup.number().positive().integer().required(),
+  name: yup
+    .string()
+    .required()
+    .test('two-words', 'Please enter at least two words', (value) =>
+      !value ? true : `${value || ''}`?.split(' ').filter((x) => !!x).length >= 2
+    ),
+  age: yup
+    .number()
+    .positive()
+    .integer()
+    .min(18)
+    .max(60)
+    .required()
+    .typeError('Please enter a valid number'),
+  mark: yup.number().positive().min(0).max(10).required().typeError('Please enter a valid number'),
+  gender: yup.string().oneOf(['male', 'female']).required(),
+  city: yup.string().required(),
 });
 
 export function StudentForm({ initialValues, onSubmit }: Props): ReactElement {
@@ -27,7 +38,7 @@ export function StudentForm({ initialValues, onSubmit }: Props): ReactElement {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IStudent>({ defaultValues: initialValues });
+  } = useForm<IStudent>({ defaultValues: initialValues, resolver: yupResolver(schema) });
 
   const cityOptions = useAppSelector(selectCityOptions);
 
@@ -48,8 +59,8 @@ export function StudentForm({ initialValues, onSubmit }: Props): ReactElement {
             { value: 'female', label: 'Female' },
           ]}
         />
-        <InputField name="age" control={control} label="Full Name" />
-        <InputField name="mark" control={control} label="Full Name" />
+        <InputField name="age" control={control} label="Age" />
+        <InputField name="mark" control={control} label="Mark" />
         <SelectField name="city" control={control} label="City" options={cityOptions} />
         <Box mt={3}>
           <Button variant="contained" color="primary" type="submit">
