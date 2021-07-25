@@ -2,9 +2,8 @@ import { Box, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 import { studentApi } from 'api';
 import { IStudent } from 'models';
-import React, { ReactElement, useState } from 'react';
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { StudentForm } from '../components/StudentForm';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +24,7 @@ export default function AddEditPage(): ReactElement {
   const [student, setStudent] = useState<IStudent>();
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
+  const history = useHistory();
 
   useEffect(() => {
     if (!studentId) return;
@@ -50,8 +50,14 @@ export default function AddEditPage(): ReactElement {
     ...student,
   } as IStudent;
 
-  const handleStudentFormSubmit = (data: IStudent) => {
-    console.log({ data });
+  const handleStudentFormSubmit = async (data: IStudent) => {
+    if (isEdit) {
+      await studentApi.update(data);
+    } else {
+      await studentApi.add(data);
+    }
+
+    history.push('/admin/students');
   };
 
   return (
@@ -63,6 +69,7 @@ export default function AddEditPage(): ReactElement {
         </Typography>
       </Link>
       <Typography variant="h4">{isEdit ? 'Update student' : 'Add new student'}</Typography>
+
       {(!isEdit || !!student) && (
         <Box mt={3}>
           <StudentForm initialValues={initialValues} onSubmit={handleStudentFormSubmit} />
