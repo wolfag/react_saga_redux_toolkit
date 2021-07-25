@@ -1,6 +1,14 @@
 import { Box, Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
+import { PlusOne } from '@material-ui/icons';
+import Pagination from '@material-ui/lab/Pagination';
+import { studentApi } from 'api';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { selectCityList, selectCityMap } from 'features/city/citySlice';
+import { IListParams, IStudent, TOrder } from 'models';
 import React, { ReactElement, useEffect } from 'react';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import StudentFilters from '../components/StudentFilters';
 import StudentTable from '../components/StudentTable';
 import {
   selectStudentFilter,
@@ -9,13 +17,6 @@ import {
   selectStudentPagination,
   studentActions,
 } from '../studentSlice';
-import Pagination from '@material-ui/lab/Pagination';
-import { selectCityList, selectCityMap } from 'features/city/citySlice';
-import { PlusOne } from '@material-ui/icons';
-import { IListParams, IStudent, TOrder } from 'models';
-import StudentFilters from '../components/StudentFilters';
-import { studentApi } from 'api';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,8 +92,26 @@ export default function ListPage(): ReactElement {
     try {
       await studentApi.remove(student.id || '');
       dispatch(studentActions.setFilter({ ...filter }));
+      toast.success('🦄 Delete successfully!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
       console.log(error);
+      toast.error(`${error.message}`, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 

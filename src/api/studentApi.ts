@@ -18,7 +18,6 @@ const studentApi = {
   },
   update(data: Partial<IStudent>): Promise<IStudent> {
     const url = `/students/${data.id}`;
-    console.log({ url })
     return axiosClient.patch(url, data)
   },
   remove(id: string): Promise<any> {
