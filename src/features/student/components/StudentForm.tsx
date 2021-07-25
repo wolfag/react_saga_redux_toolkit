@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Box, Button } from '@material-ui/core';
-import { InputField } from 'components/FromFields';
+import { InputField, RadioGroupField } from 'components/FromFields';
 
 interface Props {
   initialValues?: IStudent;
@@ -36,9 +36,17 @@ export function StudentForm({ initialValues, onSubmit }: Props): ReactElement {
     <Box maxWidth={400}>
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <InputField name="name" control={control} label="Full Name" />
+        <RadioGroupField
+          name="gender"
+          control={control}
+          label="Gender"
+          options={[
+            { value: 'male', label: 'Male' },
+            { value: 'female', label: 'Female' },
+          ]}
+        />
         <InputField name="age" control={control} label="Full Name" />
         <InputField name="mark" control={control} label="Full Name" />
-        <InputField name="gender" control={control} label="Full Name" />
         <InputField name="city" control={control} label="Full Name" />
         <Box mt={3}>
           <Button variant="contained" color="primary" type="submit">
