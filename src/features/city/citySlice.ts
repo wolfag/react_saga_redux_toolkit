@@ -34,10 +34,13 @@ const citySlice = createSlice({
 export const cityActions = citySlice.actions;
 
 export const selectCityList = (state: RootState) => state.city.list;
+
 export const selectCityMap = createSelector(selectCityList, (cityList) => cityList.reduce((map: ICityMap, city) => {
   map[city.code] = city;
   return map;
 }, {}))
+
+export const selectCityOptions = createSelector(selectCityList, (cityList) => cityList.map(city => ({ value: city.code, label: city.name })))
 
 const cityReducer = citySlice.reducer;
 export default cityReducer;

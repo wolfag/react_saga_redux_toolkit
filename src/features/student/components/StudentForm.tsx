@@ -1,10 +1,11 @@
+import { Box, Button } from '@material-ui/core';
+import { useAppSelector } from 'app/hooks';
+import { InputField, RadioGroupField, SelectField } from 'components/FromFields';
+import { selectCityOptions } from 'features/city/citySlice';
 import { IStudent } from 'models';
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Box, Button } from '@material-ui/core';
-import { InputField, RadioGroupField } from 'components/FromFields';
 
 interface Props {
   initialValues?: IStudent;
@@ -28,6 +29,8 @@ export function StudentForm({ initialValues, onSubmit }: Props): ReactElement {
     formState: { errors },
   } = useForm<IStudent>({ defaultValues: initialValues });
 
+  const cityOptions = useAppSelector(selectCityOptions);
+
   const handleFormSubmit = (formValues: IStudent) => {
     console.log({ formValues });
   };
@@ -47,7 +50,7 @@ export function StudentForm({ initialValues, onSubmit }: Props): ReactElement {
         />
         <InputField name="age" control={control} label="Full Name" />
         <InputField name="mark" control={control} label="Full Name" />
-        <InputField name="city" control={control} label="Full Name" />
+        <SelectField name="city" control={control} label="City" options={cityOptions} />
         <Box mt={3}>
           <Button variant="contained" color="primary" type="submit">
             Save
